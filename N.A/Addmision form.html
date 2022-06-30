@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="std.js"></script>
+</head>
+<body  style="background-color: rgb(255, 0, 204); color: rgb(18, 11, 14);">
+  <h1>TEACHERS FORM</h1>
+  <p>
+    <label for="" id="lblKey"></label>
+  </p>
+   <p>
+    <label for="">ROLLNo</label>
+    <input type="text"  id="rno">
+  </p>
+  <p>
+    <label for=""> Name</label>
+    <input type="text" id="name">
+</p>
+<p>
+    <label for="">F/Name</label>
+    <input type="text" id="fname">
+</p>
+<p>
+    <label for="">DOB</label>
+    <input type="text" id="dob">
+</p>
+
+  <p>
+    <label for="">cellno</label>
+    <input type="text" id="cellno">
+  </p>
+  <p>
+    <label for="">GENDER:</label>
+    <input type="radio" name="gender" value="male" checked />MALE
+    <input type="radio" name="gender" value="female">FEMALE
+    <input type="radio" name="gender" value="other">OTHER
+</p>
+<p>
+    <label for="">LANGUGES:</label>
+    <input type="checkbox" name="language" value="urdu">urdu
+    <input type="checkbox" name="language" value="english">english
+    <input type="checkbox" name="language" value="arbic">arbic
+</p>
+<p>
+    <label for="">CITY</label>
+    <select id="selectcity">
+        <option value="I">Islamabad</option>
+        <option value="K">Karachi</option>
+        <option value="H">Hadrabad</option>
+        <option value="L">Lahore</option>
+        <option value="P">Peshaware</option>
+        <option value="Q">Quetta</option>
+    </select>
+</p>
+  <P>
+    <input type="button" value="submit" onclick="submit()">
+    <input type="button" value="update" onclick="updateRecord()">
+</P>
+<p>
+  <input type="text" id="txtsr">
+  <input type="button" value="search" onclick="findItem()" >
+</p>
+  <p>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ROLLNo</th>
+          <th>Name</th>
+          <th>FName</th>
+          <th>DOB</th>
+          <th>cellno</th> 
+          <th>Edit</th>
+            <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody id="tb">
+
+      </tbody>
+    </table>
+  </p>
+
+
+   </body>
+</html>

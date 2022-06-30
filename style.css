@@ -1,0 +1,28 @@
+.nav-link{
+    color: rgb(226, 43, 73) !important;
+    
+}
+.main{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    
+
+
+    
+}
+.card1,.card2,.card3{
+    background-color: blueviolet;
+    padding: 10px;
+    flex-direction: row;
+    box-shadow: 9px 5px 6px rgb(13, 12, 14);
+     justify-content: space-around;
+     display: flex;
+}
+.fa{
+    color: brown;
+    font-size: 40px;
+    
+}

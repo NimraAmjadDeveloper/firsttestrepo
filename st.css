@@ -1,0 +1,45 @@
+.main{
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.card1,.card2,.card3{
+    background-image: linear-gradient(to right, rgb(133, 35, 99) , rgb(11, 14, 14));
+
+    color: rgb(255, 255, 255) !important;
+    display: flex;
+    height: 100px;
+    width: 300px;
+    justify-content: center;
+    margin-top: 10px;
+    box-shadow: 2px 4px 5px rgb(128, 128, 128) !important;
+    align-items: center;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 3px rgb(0, 0, 0) !important;
+}
+.navbar-brand{
+    color: white !important;
+    font-size: x-large;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+       text-shadow: 2px 2px 3px black !important;
+    padding: 10px;
+}
+.fa-heart{
+    color:aliceblue !important;
+    font-size: 50px;
+    margin-right: 10px;
+}
+.fa-user-circle-o{
+    font-size: 30px;
+    margin-right: 5px;
+    margin-top: 6px;
+    color:aliceblue !important;
+}
+.yz{
+    text-align: center;
+    b
+}

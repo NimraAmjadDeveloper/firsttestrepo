@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OBJECT</title>
+    <script src="obj.js"></script>
+</head>
+
+<body style="background-color: aqua; color: rgb(226, 43, 186);">
+    <h1>STUDENT FORM</h1>
+    <p>
+        <label for="" id="lblKey"></label>
+    </p>
+    <p>
+        <label for="">ROLL No</label>
+        <input type="number" id="rno">
+    </p>
+    <p>
+        <label for="">Name</label>
+        <input type="text" id="name">
+    </p>
+    <p>
+        <label for="">F/Name</label>
+        <input type="text" id="fname">
+    </p>
+    <p>
+        <label for="">DOB</label>
+        <input type="text" id="dob">
+    </p>
+    <p>
+        <label for="">CNIC NO</label>
+        <input type="text" id="cno">
+    </p>
+    <p>
+        <label for="">CELL NO</label>
+        <input type="text" id="cellno">
+    </p>
+    <p>
+        <label for="">GENDER:</label>
+        <input type="radio" name="gender" value="male" checked />MALE
+        <input type="radio" name="gender" value="female">FEMALE
+        <input type="radio" name="gender" value="other">OTHER
+    </p>
+    <p>
+        <label for="">LANGUGES:</label>
+        <input type="checkbox" name="language" value="urdu">urdu
+        <input type="checkbox" name="language" value="english">english
+        <input type="checkbox" name="language" value="arbic">arbic
+    </p>
+    <p>
+        <label for="">CITY</label>
+        <select id="selectcity">
+            <option value="I">Islamabad</option>
+            <option value="K">Karachi</option>
+            <option value="H">Hadrabad</option>
+            <option value="L">Lahore</option>
+            <option value="P">Peshaware</option>
+            <option value="Q">Quetta</option>
+        </select>
+    </p>
+    <P>
+        <input type="button" value="submit" id="btnsubmit">
+    </P>
+    <p>
+        <table border="=1">
+            <thead>
+                <tr>
+                    <th>ROLLNo</th>
+                    <th>Name</th>
+                    <th>FName</th>
+                    <th>gender</th>
+                    <th>city</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody id="tb">
+
+            </tbody>
+        </table>
+    </p>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        //import { getDatabase, } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyBEuvSDWEZXPPUI725t796opZvfFIxE0W0",
+            authDomain: "projectmydb.firebaseapp.com",
+            databaseURL: "https://projectmydb-default-rtdb.firebaseio.com",
+            projectId: "projectmydb",
+            storageBucket: "projectmydb.appspot.com",
+            messagingSenderId: "778996707152",
+            appId: "1:778996707152:web:f5021f55f1a6ef76b24655",
+            measurementId: "G-5KF0M93927"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        // const analytics = getAnalytics(app);
+        import { getDatabase, ref, set, get, push, child, remove } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+        const db = getDatabase(app)
+
+        const dbRef = ref(db, '/school/students')
+        const dbRefGet = ref(db)
+
+        getAll()
+        var stdAll = []
+        function getAll(){
+            get(child(dbRefGet,'/school/students')).then((gData)=>{
+                //console.log(gData.val())
+                stdAll = Object.values(gData.val())
+                console.log(stdAll)
+                filltable()
+            })
+        }
+
+        // Table Work
+        
+        function filltable(){
+            var tb = document.getElementById("tb")
+            while(tb.rows.length > 0){
+                tb.deleteRow(0)
+            }
+            stdAll.forEach(element => {
+                var tr = document.createElement("tr")
+
+                var td = document.createElement("td")
+                td. innerHTML = element.ROLLNo
+                tr.appendChild(td)
+                
+                var td =document.createElement("td")
+                td.innerHTML =element.Name
+                tr.appendChild(td)
+
+
+                var td = document.createElement("td")
+                td.innerHTML = element.FName
+                tr.appendChild(td)
+
+                var td = document.createElement("td")
+                td.innerHTML= element.GENDER
+                tr.appendChild(td)
+
+                var td = document.createElement("td")
+                td.innerHTML = element.City
+                tr.appendChild(td)
+
+                var td = document.createElement("td")
+
+                //   Edit btn
+                var btnEdit = document.createElement("button")
+                btnEdit. innerHTML = 'Edit'
+                btnEdit.setAttribute("id",element.Key)
+                btnEdit.setAttribute("onclick","singedit(this)")
+                btnEdit.addEventListener("click",(e) => {
+                    getSinglerecord(e.target.id)
+                })                   
+                td.appendChild(btnEdit)
+                tr.appendChild(td)
+
+                // Remove Button
+
+                var td = document.createElement("td")
+                var btnRemove = document.createElement("button")
+                btnRemove.innerHTML = "Remove"
+                btnRemove.setAttribute("id" , element.Key)
+                btnRemove.addEventListener("click",(e)=>{
+                    var newChild = child(dbRef, e.target.id)
+                    remove(newChild)
+                    getAll()
+                })
+                td. appendChild(btnRemove)
+                tr.appendChild(td)
+                
+
+
+                tb.appendChild(tr)
+            });
+        }
+      
+        function singedit(def){
+            console.log(def)
+            def.setAttribute('style','color:blue')
+        }
+
+        //get single recby key
+
+        var singleRecord = {}
+        function getSinglerecord(key){
+            get(child(dbRefGet,'/school/students/' + key)).then((gData)=>{
+                //console.log(gData.val())
+                singleRecord = gData.val()
+                fillSingleRecord()
+            })
+        }
+
+        //fill single rec to text boxes
+
+        function fillSingleRecord(){
+            document.getElementById("lblKey").innerHTML = singleRecord.Key
+            document.getElementById('rno').value = singleRecord.ROLLNo
+            document.getElementById("name").value = singleRecord.Name
+            document.getElementById("fname").value = singleRecord.FName
+            document.getElementById("dob").value = singleRecord.DOB
+            document.getElementById("cno").value = singleRecord.CNICNO
+            document.getElementById("cellno").value = singleRecord.CELLNO
+        }
+
+
+        var btnsubmit = document.getElementById("btnsubmit")
+        btnsubmit.addEventListener('click', submit)
+        function submit() {
+            
+            var objectstudent = {}
+            
+            objectstudent.ROLLNo = document.getElementById('rno').value
+
+            objectstudent.Name = document.getElementById("name").value
+
+            objectstudent.FName = document.getElementById("fname").value
+
+            objectstudent.DOB = document.getElementById("dob").value
+
+            objectstudent.CNICNO = document.getElementById("cno").value
+
+            objectstudent.CELLNO = document.getElementById("cellno").value
+
+            //gender work
+            var gen = ''
+            var genderControl = document.getElementsByName('gender')
+            for (var i = 0; i < genderControl.length; i++) {
+                if (genderControl[i].checked) {
+                    gen = genderControl[i].value
+                }
+            }
+            objectstudent.GENDER = gen
+            
+
+            //Language Work
+            var languages = []
+            var lang = document.getElementsByName("language")
+            for (var i = 0; i < lang.length; i++) {
+                if (lang[i].checked) {
+                    languages.push(lang[i].value)
+                }
+            }
+            objectstudent.Languages = languages
+            // CITY WORK
+            var city = ""
+            var selectcity = document.getElementById("selectcity")
+            city = selectcity.options[selectcity.selectedIndex].value
+            objectstudent.City = city
+            
+            //not in 2nd work
+            var lblKey = document.getElementById("lblKey").innerHTML
+            var key = lblKey
+            if(lblKey == ""){
+                key = push(dbRef).key
+            }
+            
+            objectstudent.Key = key
+
+            var newChild = child(dbRef, key)
+
+            set(newChild, objectstudent).then(() => {
+                alert('record success')
+                getAll()
+            })
+            console.log(objectstudent)
+//not in 2nd work
+        }
+    </script>
+</body>
+
+</html>
